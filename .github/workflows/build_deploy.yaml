@@ -17,6 +17,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Set VITE_BASE_PATH env variable
+        run: echo "VITE_BASE_PATH=/${GITHUB_REPOSITORY#*/}/" >> $GITHUB_ENV
+
       - name: Build static page
         run: npm run build
 
