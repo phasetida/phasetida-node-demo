@@ -61,20 +61,20 @@ declare global {
         hintLabel.innerHTML = `loading ${image}->${name}`;
         images.set(name, await loadImage(image));
     }
-    await _loadImage("tap", "/note/tap.png");
-    await _loadImage("drag", "/note/drag.png");
-    await _loadImage("flick", "/note/flick.png");
-    await _loadImage("hold_head", "/note/hold_head.png");
-    await _loadImage("hold_body", "/note/hold_body.png");
-    await _loadImage("hold_end", "/note/hold_end.png");
-    await _loadImage("tap_hl", "/note/tap_hl.png");
-    await _loadImage("drag_hl", "/note/drag_hl.png");
-    await _loadImage("flick_hl", "/note/flick_hl.png");
-    await _loadImage("hold_head_hl", "/note/hold_head_hl.png");
-    await _loadImage("hold_body_hl", "/note/hold_body_hl.png");
-    await _loadImage("hold_body_hl", "/note/hold_body_hl.png");
+    await _loadImage("tap", "./note/tap.png");
+    await _loadImage("drag", "./note/drag.png");
+    await _loadImage("flick", "./note/flick.png");
+    await _loadImage("hold_head", "./note/hold_head.png");
+    await _loadImage("hold_body", "./note/hold_body.png");
+    await _loadImage("hold_end", "./note/hold_end.png");
+    await _loadImage("tap_hl", "./note/tap_hl.png");
+    await _loadImage("drag_hl", "./note/drag_hl.png");
+    await _loadImage("flick_hl", "./note/flick_hl.png");
+    await _loadImage("hold_head_hl", "./note/hold_head_hl.png");
+    await _loadImage("hold_body_hl", "./note/hold_body_hl.png");
+    await _loadImage("hold_body_hl", "./note/hold_body_hl.png");
     for (let i = 0; i <= 29; i++) {
-        await _loadImage("click_" + i, "/click/click" + i + ".png");
+        await _loadImage("click_" + i, "./click/click" + i + ".png");
         let origin = images.get("click_" + i) as AssetImage;
         images.set(
             "effect_perfect_" + i,
@@ -88,7 +88,7 @@ declare global {
     console.info("initializing canvas");
     registerListener();
     console.info("initializing level");
-    const json = await fetch("/test.json").then((it) => it.text());
+    const json = await fetch("./test.json").then((it) => it.text());
     const loadResult = load_level(json);
     console.info(`level load result: ${loadResult}`);
     console.info(`song length: ${loadResult.length_in_second}`);
