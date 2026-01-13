@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>phasetida-demo</title>
+    </head>
+
+    <body>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            body,
+            html {
+                height: 100%;
+            }
+        </style>
+        <div class="scroll-container">
+            <canvas id="canvas"></canvas>
+            <div id="debug-container">
+                <label id="hint">loading WASM</label>
+                <div>
+                    <label>Auto play</label>
+                    <input type="checkbox" id="sim-auto-play" checked />
+                </div>
+                <div>
+                    <label>Enable input</label>
+                    <input type="checkbox" id="sim-enable-input" disabled />
+                </div>
+                <div>
+                    <label>Speed</label>
+                    <input type="text" id="sim-playback-speed" />
+                    <button id="sim-playback-speed-apply">Apply</button>
+                </div>
+                <div>
+                    <label>Time</label>
+                    <input
+                        type="range"
+                        id="sim-playback-time"
+                        min="0"
+                        max="1000"
+                    />
+                    <label id="sim-playback-time-display">[Unknown]</label>
+                </div>
+                <div>
+                    <label>Time adjust</label>
+                    <input type="text" id="sim-playback-time-set" />
+                    <button id="sim-playback-time-set-apply">Apply</button>
+                </div>
+            </div>
+        </div>
+        <script type="module" src="/src/main.js"></script>
+    </body>
+</html>
