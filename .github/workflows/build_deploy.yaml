@@ -3,6 +3,7 @@ name: Build package and deploy to demo branch
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
