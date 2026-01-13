@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: demo
-          path: demo
 
       - uses: actions/setup-node@v4
         with:
@@ -35,6 +32,11 @@ jobs:
           publish_branch: demo
           keep_files: false
           force_orphan: true
+
+      - uses: actions/checkout@v4
+        with:
+          ref: demo
+          path: demo
 
       - name: Checkout target repo
         uses: actions/checkout@v4
