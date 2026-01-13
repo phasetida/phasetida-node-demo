@@ -53,7 +53,7 @@ jobs:
 
       - name: Delete test.json
         run: |
-          rm flutter-package/assets/test.json
+          rm -f flutter-package/assets/phasetida-node-demo/test.json
 
       - name: Commit and push to target repo
         run: |
