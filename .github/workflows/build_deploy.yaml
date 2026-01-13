@@ -51,6 +51,10 @@ jobs:
           mkdir flutter-package/assets
           cp -r demo/* flutter-package/assets/
 
+      - name: Delete test.json
+        run: |
+          rm flutter-package/assets/test.json
+
       - name: Commit and push to target repo
         run: |
           cd flutter-package
