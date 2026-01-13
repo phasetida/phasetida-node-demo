@@ -1,0 +1,30 @@
+name: Build package and deploy to demo branch
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build static page
+        run: npm run build
+
+      - name: Push pkg to demo branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.PUBLISH_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: demo
+          keep_files: false
+          force_orphan: true
