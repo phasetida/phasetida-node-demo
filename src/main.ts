@@ -16,6 +16,9 @@ declare global {
         simSetTime: (timeInSecond: number) => void;
         simSetSpeed: (speed: number) => void;
         simSetShowControls: (show: boolean) => void;
+        simLoadLevel: (json: string) => void;
+        _simPlaying: boolean;
+        _simPlayLock: boolean;
         _simStartTime: number;
         _simLastChangeSpeedTime: number;
         _simLastTimeInSecond: number;
@@ -37,6 +40,8 @@ declare global {
     window.inputBufferLength = inputBufferLength;
     window.outputBufferLength = outputBufferLength;
     window._simSpeed = 1.0;
+    window._simPlaying = false;
+    window._simPlayLock = false;
     window.simSetSpeed = (speed: number) => {
         window._simLastChangeSpeedTime +=
             (Date.now() - window._simStartTime) * window._simSpeed;
@@ -52,6 +57,22 @@ declare global {
     window.simSetShowControls = (show: boolean) => {
         (document.getElementById("debug-container") as HTMLDivElement).hidden =
             !show;
+    };
+    window.simLoadLevel = (json: string) => {
+        const useDefaultButton = document.getElementById(
+            "sim-use-default-level"
+        ) as HTMLButtonElement;
+        useDefaultButton.hidden = true;
+        window._simPlaying = false;
+        console.info("initializing level");
+        const loadResult = load_level(json);
+        console.info(`level load result: ${loadResult}`);
+        console.info(`song length: ${loadResult.length_in_second}`);
+        setSongLength(loadResult.length_in_second);
+        window._simLastTimeInSecond = 0.0;
+        window._simLastChangeSpeedTime = 0.0;
+        window._simPlaying = true;
+        draw(window.inputBuffer, window.outputBuffer, images);
     };
     registerControllers();
     console.info("loading assets");
@@ -87,12 +108,15 @@ declare global {
     }
     console.info("initializing canvas");
     registerListener();
-    console.info("initializing level");
-    const json = await fetch("./test.json").then((it) => it.text());
-    const loadResult = load_level(json);
-    console.info(`level load result: ${loadResult}`);
-    console.info(`song length: ${loadResult.length_in_second}`);
-    setSongLength(loadResult.length_in_second);
-    console.info("start drawing");
-    draw(window.inputBuffer, window.outputBuffer, images);
+    console.info("waiting for level... (use 'window.')");
+    hintLabel.innerHTML = `waiting for level...`;
+    const useDefaultButton = document.getElementById(
+        "sim-use-default-level"
+    ) as HTMLButtonElement;
+    useDefaultButton.hidden = false;
+    useDefaultButton.onclick = async (_) => {
+        hintLabel.innerHTML = `loading default level...`;
+        const json = await (await fetch("./test.json")).text();
+        window.simLoadLevel(json);
+    };
 })();
