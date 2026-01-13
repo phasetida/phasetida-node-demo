@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: demo
+          path: demo
 
       - uses: actions/setup-node@v4
         with:
@@ -32,3 +35,25 @@ jobs:
           publish_branch: demo
           keep_files: false
           force_orphan: true
+
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          repository: phasetida/phasetida_flutter
+          token: ${{ secrets.FLUTTER_TOKEN }}
+          path: flutter-package
+
+      - name: Copy directory to target repo
+        run: |
+          rm -rf flutter-package/assets
+          mkdir flutter-package/assets
+          cp -r demo/* flutter-package/assets/
+
+      - name: Commit and push to target repo
+        run: |
+          cd flutter-package
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/
+          git commit -m "Sync directory from source repo [skip ci]" || echo "No changes to commit"
+          git push
