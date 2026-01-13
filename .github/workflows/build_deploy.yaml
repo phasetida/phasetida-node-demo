@@ -48,7 +48,7 @@ jobs:
       - name: Copy directory to target repo
         run: |
           rm -rf flutter-package/assets/phasetida-node-demo
-          mkdir flutter-package/assets/phasetida-node-demo
+          mkdir -p flutter-package/assets/phasetida-node-demo
           cp -r demo/* flutter-package/assets/phasetida-node-demo/
 
       - name: Delete test.json
