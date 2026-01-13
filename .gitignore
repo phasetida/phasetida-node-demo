@@ -23,8 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-public/test.json
-
 # Wrangler
 .wrangler
 wrangler.jsonc
