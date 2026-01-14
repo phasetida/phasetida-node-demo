@@ -116,7 +116,8 @@ function draw(
             window.simLog &&
             nowTime - window._simLastLogTime >= window.simLogLatency
         ) {
-            console.log(
+            window.flutter_inappwebview.callHandler(
+                "flutterTick",
                 `&${currentTimeInSecond},${window._simSongLength},${logCombo},${logMaxCombo},${logScore},${logAccurate}`
             );
             window._simLastLogTime = nowTime;

@@ -27,6 +27,7 @@ declare global {
         _simSpeed: number;
         _simSongLength: number;
         _simLastLogTime: number;
+        flutter_inappwebview:any;
     }
 }
 (async () => {
