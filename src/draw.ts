@@ -64,6 +64,11 @@ class CursorDataView {
     }
 }
 
+let logCombo = 0;
+let logMaxCombo = 0;
+let logScore = 0;
+let logAccurate = 0;
+
 function draw(
     inputBuffer: Uint8Array,
     outputBuffer: Uint8Array,
@@ -107,6 +112,11 @@ function draw(
         window._simLastTimeInSecond = currentTimeInSecond;
         timeRange.value = `${currentTimeInSecond * 1000.0}`;
         timeDisplay.innerHTML = `${parseFloat(timeRange.value) / 1000.0}`;
+        if (window.simLog) {
+            console.log(
+                `&${currentTimeInSecond},${window._simSongLength},${logCombo},${logMaxCombo},${logScore},${logAccurate}`
+            );
+        }
         if (!window._simPlaying) {
             return;
         }
@@ -298,6 +308,10 @@ function drawBuffer(
                 const maxCombo = outputView.getUint32();
                 const score = outputView.getFloat32();
                 const accurate = outputView.getFloat32();
+                logCombo = combo;
+                logMaxCombo = maxCombo;
+                logScore = score;
+                logAccurate = accurate;
                 hint.innerHTML = `combo: ${combo}<br>max combo: ${maxCombo}<br>score: ${score}<br>accurate: ${accurate}`;
             }
         }
