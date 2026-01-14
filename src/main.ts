@@ -18,6 +18,7 @@ declare global {
         simSetShowControls: (show: boolean) => void;
         simLoadLevel: (json: string) => void;
         simLog: boolean;
+        simLogLatency: number;
         _simPlaying: boolean;
         _simPlayLock: boolean;
         _simStartTime: number;
@@ -25,6 +26,7 @@ declare global {
         _simLastTimeInSecond: number;
         _simSpeed: number;
         _simSongLength: number;
+        _simLastLogTime: number;
     }
 }
 (async () => {
@@ -45,6 +47,8 @@ declare global {
     window._simPlaying = false;
     window._simPlayLock = false;
     window.simLog = false;
+    window.simLogLatency = 1000.0 / 120.0;
+    window._simLastLogTime = Date.now();
     window.simSetSpeed = (speed: number) => {
         window._simLastChangeSpeedTime +=
             (Date.now() - window._simStartTime) * window._simSpeed;

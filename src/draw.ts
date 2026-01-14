@@ -112,10 +112,14 @@ function draw(
         window._simLastTimeInSecond = currentTimeInSecond;
         timeRange.value = `${currentTimeInSecond * 1000.0}`;
         timeDisplay.innerHTML = `${parseFloat(timeRange.value) / 1000.0}`;
-        if (window.simLog) {
+        if (
+            window.simLog &&
+            nowTime - window._simLastLogTime >= window.simLogLatency
+        ) {
             console.log(
                 `&${currentTimeInSecond},${window._simSongLength},${logCombo},${logMaxCombo},${logScore},${logAccurate}`
             );
+            window._simLastLogTime = nowTime;
         }
         if (!window._simPlaying) {
             return;
