@@ -1,4 +1,4 @@
-import { pre_draw } from "phasetida-wasm-core";
+import { pre_draw, load_image_offset } from "phasetida-wasm-core";
 import { AssetImage } from "./image";
 import { writeTouches } from "./input";
 
@@ -24,6 +24,9 @@ class ViewPort {
     }
     projectSize(worldSize: number): number {
         return worldSize * this.scale;
+    }
+    unProjectSize(canvasSize: number): number {
+        return canvasSize / this.scale;
     }
 }
 
@@ -86,6 +89,16 @@ function draw(
     const timeDisplay = document.getElementById(
         "sim-playback-time-display"
     ) as HTMLLabelElement;
+    load_image_offset(
+        (imagesMap.get("hold_head") as AssetImage).height *
+            window.simElementScale,
+        (imagesMap.get("hold_head_hl") as AssetImage).height *
+            window.simElementScale,
+        (imagesMap.get("hold_end") as AssetImage).height *
+            window.simElementScale,
+        (imagesMap.get("hold_end") as AssetImage).height *
+            window.simElementScale
+    );
     function drawLoop() {
         const nowTime = Date.now();
         const currentTimeInSecond =
@@ -158,10 +171,10 @@ function drawImage(
         width = imgData.width;
         height = imgData.height;
     }
-    const rad = (rotation * Math.PI) / 180;
+    const rad = (rotation * Math.PI) / 180.0;
     const drawWidth = width * scale;
     const drawHeight = heightEnforce === null ? height * scale : heightEnforce;
-    const anchorOffset = { x: drawWidth / 2, y: drawHeight / 2 };
+    const anchorOffset = { x: drawWidth / 2.0, y: drawHeight / 2.0 };
     ctx.save();
     ctx.globalAlpha = opacity ?? 1.0;
     ctx.translate(x, y);
@@ -262,7 +275,7 @@ function drawBuffer(
                     name,
                     xp,
                     yp,
-                    viewPort.projectSize(0.25),
+                    viewPort.projectSize(window.simElementScale),
                     rotate,
                     null,
                     heightEnforce

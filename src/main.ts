@@ -13,6 +13,7 @@ declare global {
         simAuto: boolean;
         simSimultaneousHighlight: boolean;
         simEnableTouch: boolean;
+        simElementScale: number;
         simSetTime: (timeInSecond: number) => void;
         simSetSpeed: (speed: number) => void;
         simSetShowControls: (show: boolean) => void;
@@ -27,7 +28,7 @@ declare global {
         _simSpeed: number;
         _simSongLength: number;
         _simLastLogTime: number;
-        flutter_inappwebview:any;
+        flutter_inappwebview: any;
     }
 }
 (async () => {
@@ -40,6 +41,7 @@ declare global {
     window.simAuto = true;
     window.simSimultaneousHighlight = true;
     window.simEnableTouch = false;
+    window.simElementScale = 0.25;
     window.inputBuffer = createBuffer(inputBufferLength);
     window.outputBuffer = createBuffer(outputBufferLength);
     window.inputBufferLength = inputBufferLength;
