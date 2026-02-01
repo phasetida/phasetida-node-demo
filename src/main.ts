@@ -14,6 +14,7 @@ declare global {
         simSimultaneousHighlight: boolean;
         simEnableTouch: boolean;
         simElementScale: number;
+        simEffectLevel: number;
         simSetTime: (timeInSecond: number) => void;
         simSetSpeed: (speed: number) => void;
         simSetShowControls: (show: boolean) => void;
@@ -41,7 +42,8 @@ declare global {
     window.simAuto = true;
     window.simSimultaneousHighlight = true;
     window.simEnableTouch = false;
-    window.simElementScale = 0.25;
+    window.simElementScale = 1;
+    window.simEffectLevel = 2;
     window.inputBuffer = createBuffer(inputBufferLength);
     window.outputBuffer = createBuffer(outputBufferLength);
     window.inputBufferLength = inputBufferLength;
@@ -114,6 +116,18 @@ declare global {
         );
         images.set(
             "effect_good_" + i,
+            tintToTempCanvas(origin, "rgba(168, 239, 246, 255)")
+        );
+    }
+    for (let i = 0; i <= 29; i++) {
+        await _loadImage("splash_" + i, "./splash/splash" + i + ".png");
+        let origin = images.get("splash_" + i) as AssetImage;
+        images.set(
+            "splash_perfect_" + i,
+            tintToTempCanvas(origin, "rgba(255, 254, 183, 255)")
+        );
+        images.set(
+            "splash_good_" + i,
             tintToTempCanvas(origin, "rgba(168, 239, 246, 255)")
         );
     }

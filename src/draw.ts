@@ -91,12 +91,16 @@ function draw(
     ) as HTMLLabelElement;
     load_image_offset(
         (imagesMap.get("hold_head") as AssetImage).height *
+            0.25 *
             window.simElementScale,
         (imagesMap.get("hold_head_hl") as AssetImage).height *
+            0.25 *
             window.simElementScale,
         (imagesMap.get("hold_end") as AssetImage).height *
+            0.25 *
             window.simElementScale,
         (imagesMap.get("hold_end") as AssetImage).height *
+            0.25 *
             window.simElementScale
     );
     function drawLoop() {
@@ -275,7 +279,7 @@ function drawBuffer(
                     name,
                     xp,
                     yp,
-                    viewPort.projectSize(window.simElementScale),
+                    viewPort.projectSize(0.25 * window.simElementScale),
                     rotate,
                     null,
                     heightEnforce
@@ -288,6 +292,9 @@ function drawBuffer(
                 const frame = outputView.getUint8();
                 const tintType = outputView.getUint8();
                 const [xp, yp] = viewPort.project(x, y);
+                if (window.simEffectLevel <= 0) {
+                    break;
+                }
                 if (tintType == 0) {
                     drawImage(
                         imagesMap,
@@ -295,7 +302,7 @@ function drawBuffer(
                         "effect_perfect_" + frame,
                         xp,
                         yp,
-                        viewPort.projectSize(1.5),
+                        viewPort.projectSize(1.5 * window.simElementScale),
                         0.0,
                         null,
                         null
@@ -307,7 +314,7 @@ function drawBuffer(
                         "effect_good_" + frame,
                         xp,
                         yp,
-                        viewPort.projectSize(1.5),
+                        viewPort.projectSize(1.5 * window.simElementScale),
                         0.0,
                         null,
                         null
@@ -331,6 +338,42 @@ function drawBuffer(
                 logScore = score;
                 logAccurate = accurate;
                 hint.innerHTML = `combo: ${combo}<br>max combo: ${maxCombo}<br>score: ${score}<br>accurate: ${accurate}`;
+                break;
+            }
+            case 6: {
+                const x = outputView.getFloat32();
+                const y = outputView.getFloat32();
+                const frame = outputView.getUint8();
+                const tintType = outputView.getUint8();
+                const [xp, yp] = viewPort.project(x, y);
+                if (window.simEffectLevel <= 1) {
+                    break;
+                }
+                if (tintType == 0) {
+                    drawImage(
+                        imagesMap,
+                        ctx,
+                        "splash_perfect_" + frame,
+                        xp,
+                        yp,
+                        viewPort.projectSize(0.35 * window.simElementScale),
+                        0.0,
+                        null,
+                        null
+                    );
+                } else if (tintType == 1) {
+                    drawImage(
+                        imagesMap,
+                        ctx,
+                        "splash_good_" + frame,
+                        xp,
+                        yp,
+                        viewPort.projectSize(0.35 * window.simElementScale),
+                        0.0,
+                        null,
+                        null
+                    );
+                }
             }
         }
     }

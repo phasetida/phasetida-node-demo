@@ -17,6 +17,15 @@ function registerControllers() {
     const timeSetFieldApply = document.getElementById(
         "sim-playback-time-set-apply"
     ) as HTMLButtonElement;
+    const effectLevel0 = document.getElementById(
+        "sim-effect-0"
+    ) as HTMLInputElement;
+    const effectLevel1 = document.getElementById(
+        "sim-effect-1"
+    ) as HTMLInputElement;
+    const effectLevel2 = document.getElementById(
+        "sim-effect-2"
+    ) as HTMLInputElement;
     autoPlayCheck.onchange = (_) => {
         window.simAuto = autoPlayCheck.checked;
         enableInputCheck.disabled = autoPlayCheck.checked;
@@ -42,6 +51,15 @@ function registerControllers() {
             }
             window.simSetTime(i);
         }
+    };
+    effectLevel0.onclick = (_) => {
+        window.simEffectLevel = 0;
+    };
+    effectLevel1.onclick = (_) => {
+        window.simEffectLevel = 1;
+    };
+    effectLevel2.onclick = (_) => {
+        window.simEffectLevel = 2;
     };
     speedField.onkeydown = (event: KeyboardEvent) => {
         const key = event.key;
