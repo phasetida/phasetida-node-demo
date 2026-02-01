@@ -41,6 +41,7 @@ jobs:
       - name: Checkout target repo
         uses: actions/checkout@v4
         with:
+          ref: dev
           repository: phasetida/phasetida_flutter
           token: ${{ secrets.FLUTTER_TOKEN }}
           path: flutter-package
